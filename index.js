@@ -9,7 +9,7 @@ exports.register = function(server, options, next) {
   // yes, this creates multiple connections, but aparently, that's OK...
   var CON = [], run_once = false;
 
-  server.ext('onPreHandler', function (request, reply) {
+  server.ext('onPreAuth', function (request, reply) {
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
       assert(!err, pkg.name + 'ERROR Connecting')
       server.log(['info', pkg.name], 'DB Connection Active');
