@@ -6,6 +6,8 @@ var file = dir + __filename.replace(__dirname, '') + ' -> ';
 var pg = require('pg');
 var assert = require('assert');
 
+console.log('process.env.DATABASE_URL', process.env.DATABASE_URL)
+
 function create_tables (callback) {
   var pool = new pg.Pool({connectionString: process.env.DATABASE_URL});
   pool.connect( function(err, client) {
