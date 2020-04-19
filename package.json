@@ -2,7 +2,7 @@
   "name": "hapi-postgres-connection",
   "version": "6.5.1",
   "description": "A connection (pool) to PostgreSQL available anywhere in your hapi application",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src -d lib",
     "start": "PORT=8000 node ./tests/server/server_example.js",
