@@ -3,7 +3,7 @@ const assert = require('assert');
 assert(process.env.DATABASE_URL, 'Please set DATABASE_URL Env Variable');
 
 const pg = require('pg');
-const pkg = require('../package.json');
+const pkg = require('./package.json');
 const PG_CON = []; // this "global" is local to the plugin.
 let run_once = false;
 

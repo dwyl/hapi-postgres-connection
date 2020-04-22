@@ -2,27 +2,23 @@
   "name": "hapi-postgres-connection",
   "version": "6.5.1",
   "description": "A connection (pool) to PostgreSQL available anywhere in your hapi application",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "babel src -d lib",
     "start": "PORT=8000 node ./tests/server/server_example.js",
     "createTestDB": "node ./tests/_create_test_db.js",
     "allTests": "./node_modules/tape/bin/tape ./tests/*.js",
-    "performanceTest": "PORT=8000 node ./tests/perf.test.js | tap-spec",
-    "connectionErrorTest": "PORT=8000 node ./tests/connection_error.test.js | tap-spec",
-    "test": "npm run createTestDB && ./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape ./tests/connection_error.test.js  | node_modules/tap-spec/bin/cmd.js && npm run performanceTest"
+    "performanceTest": "PORT=8000 nyc node ./tests/perf.test.js | tap-spec",
+    "connectionErrorTest": "PORT=8000 nyc node ./tests/connection_error.test.js | tap-spec",
+    "test": "npm run createTestDB && npm run connectionErrorTest && npm run performanceTest"
   },
   "dependencies": {
     "pg": "^8.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
     "@hapi/hapi": "^19.1.1",
     "cross-env": "^7.0.2",
     "decache": "^4.5.1",
-    "istanbul": "^0.4.5",
+    "nyc": "^15.0.1",
     "pg-escape": "^0.2.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.13.2"

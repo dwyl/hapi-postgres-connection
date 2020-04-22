@@ -3,7 +3,7 @@ const escape = require('pg-escape'); // https://github.com/segmentio/pg-escape
 const decache = require('decache');
 // delete the cached module:
 decache('../../index.js');
-const HapiPostgresConnection = require('../../lib');
+const HapiPostgresConnection = require('../../index.js');
 
 const serverPreparing = async () => {
   const server = Hapi.server({
