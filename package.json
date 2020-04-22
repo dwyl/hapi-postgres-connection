@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@hapi/hapi": "^19.1.1",
-    "cross-env": "^7.0.2",
     "decache": "^4.5.1",
     "nyc": "^15.0.1",
     "pg-escape": "^0.2.0",
