@@ -9,13 +9,15 @@
     "allTests": "./node_modules/tape/bin/tape ./tests/*.js",
     "performanceTest": "PORT=8000 nyc node ./tests/perf.test.js | tap-spec",
     "connectionErrorTest": "PORT=8000 nyc node ./tests/connection_error.test.js | tap-spec",
-    "test": "npm run createTestDB && npm run connectionErrorTest && npm run performanceTest"
+    "test": "npm run createTestDB && npm run connectionErrorTest && npm run performanceTest",
+    "coverage": "codecov"
   },
   "dependencies": {
     "pg": "^8.0.2"
   },
   "devDependencies": {
     "@hapi/hapi": "^19.1.1",
+    "codecov": "^3.6.5",
     "decache": "^4.5.1",
     "nyc": "^15.0.1",
     "pg-escape": "^0.2.0",
