@@ -7,8 +7,8 @@
     "start": "PORT=8000 node ./tests/server/server_example.js",
     "createTestDB": "node ./tests/_create_test_db.js",
     "allTests": "./node_modules/tape/bin/tape ./tests/*.js",
-    "performanceTest": "PORT=8000 nyc node ./tests/perf.test.js | tap-spec",
-    "connectionErrorTest": "PORT=8000 nyc node ./tests/connection_error.test.js | tap-spec",
+    "performanceTest": "PORT=8000 nyc --reporter=lcov node ./tests/perf.test.js | tap-spec",
+    "connectionErrorTest": "PORT=8000 nyc --reporter=lcov node ./tests/connection_error.test.js | tap-spec",
     "test": "npm run createTestDB && npm run connectionErrorTest && npm run performanceTest",
     "coverage": "codecov"
   },
