@@ -13,19 +13,17 @@ const pool = new pg.Pool({
   ssl: process.env.DATABASE_SSL || false
 });
 
-// connection using created pool
-(async function () {
+const createPoolConnection = async () => {
   try {
     const client = await pool.connect();
     PG_CON.push({ client });
-    return;
   } catch (err) {
     assert(!err, pkg.name + ' ERROR Connecting to PostgreSQL!');
   }
-})();
+}
 
-function assign_connection (request, h) { // DRY
-  request.pg = module.exports.getCon();
+async function assign_connection (request, h) { // DRY
+  request.pg = await module.exports.getCon();
   return h.continue;
 }
 
@@ -33,7 +31,9 @@ const HapiPostgresConnection = {
   pkg,
   name: 'HapiPostgresConnection',
   version: '1.0.0',
-  register: async function (server, options) {
+  register: async function (server) {
+    // connection using created pool
+    await createPoolConnection();
     server.ext({
       type: 'onPreAuth',
       method: async function (request, h) {
@@ -48,16 +48,10 @@ const HapiPostgresConnection = {
           });
         }
         if(PG_CON.length === 0) {
-          try {
-            const client = await pool.connect();
-            PG_CON.push({ client: client });
-            return assign_connection(request, h);
-          } catch (err) {
-            assert(!err, + `${pkg.name} ERROR Connecting to PostgreSQL!`);
-          }
-        } else {
+          await createPoolConnection();
           return assign_connection(request, h);
         }
+        return assign_connection(request, h);
       }
     });
   }
@@ -65,6 +59,10 @@ const HapiPostgresConnection = {
 
 module.exports = HapiPostgresConnection;
 
-module.exports.getCon = function () {
+module.exports.getCon = async function () {
+  if (!PG_CON[0]) {
+    await createPoolConnection();
+    return PG_CON[0];
+  }
   return PG_CON[0];
 };
