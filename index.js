@@ -38,7 +38,7 @@ const HapiPostgresConnection = {
       type: 'onPreAuth',
       method: async function (request, h) {
         // each connection created is shut down when the server stops (e.g tests)
-        if(!run_once && !PG_CON.length) {
+        if(!run_once) {
           run_once = true;
           server.events.on('stop', function () { // only one server.on('stop') listener
             PG_CON.forEach(async function (con) { // close all the connections
