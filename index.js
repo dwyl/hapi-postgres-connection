@@ -47,10 +47,6 @@ const HapiPostgresConnection = {
             server.log(['info', pkg.name], 'DB Connection Closed');
           });
         }
-        if(PG_CON.length === 0) {
-          await createPoolConnection();
-          return assign_connection(request, h);
-        }
         return assign_connection(request, h);
       }
     });
