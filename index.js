@@ -58,7 +58,6 @@ const HapiPostgresConnection = {
         } else {
           return assign_connection(request, h);
         }
-        return h.continue;
       }
     });
   }
