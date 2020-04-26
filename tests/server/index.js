@@ -1,9 +1,5 @@
 const Hapi = require('@hapi/hapi');
 const escape = require('pg-escape'); // https://github.com/segmentio/pg-escape
-const decache = require('decache');
-// delete the cached module:
-decache('../../index.js');
-const HapiPostgresConnection = require('../../index.js');
 
 const serverPreparing = async () => {
   const server = Hapi.server({
@@ -12,10 +8,6 @@ const serverPreparing = async () => {
     debug: {
       request: ['error']
     }
-  });
-
-  await server.register({
-    plugin: HapiPostgresConnection
   });
 
   server.route({
@@ -39,8 +31,6 @@ const serverPreparing = async () => {
     method: 'POST',
     path: '/insert',
     handler: async function (request, h) {
-      console.log('insert is happens - request.pg')
-
       const insertData = escape('INSERT INTO logs (message) VALUES (%L)', request.payload.message);
       const select = 'SELECT * FROM logs WHERE (log_id = 2)';
 

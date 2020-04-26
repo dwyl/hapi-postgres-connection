@@ -1,19 +1,35 @@
 const test = require('tape');
-const { init } = require('./server');
+const decache = require('decache');
 
 (async () => {
-  const server = await init();
+  test('Test prolem with DB connect', async function (t) {
+    process.env.DATABASE_URL = 'incorrect DB credentials';
+    const { init } = require('./server');
 
-  test('GET /logs as fast as you can!', async function (t) {
-    const response = await server.inject('/logs');
-    t.equal(response.statusCode, 200, '/logs visited');
-    t.end();
-  });
-  
-  test('GET /logs try it again!', async function (t) {
-    const response = await server.inject('/logs');
-    t.equal(response.statusCode, 200, '/logs visited');
-    t.end();
+    const insert = {
+      method: 'POST',
+      url: '/insert',
+      payload: { message: 'Ground control to major Tom.'}
+    }
+
+    try {
+      const server = await init();
+      // delete the cached module:
+      decache('../index.js');
+      const HapiPostgresConnection = require('../index.js');
+
+      await server.register({
+        plugin: HapiPostgresConnection
+      });
+      const response = await server.inject(insert);
+      
+      t.equal(response.statusCode, 500, 'request failed - it is correct here');
+      await server.stop();
+
+      t.end();
+    } catch (e) {
+      console.log(e);
+    }
   });
 
   test.onFinish(() => {

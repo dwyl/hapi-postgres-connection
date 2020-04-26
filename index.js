@@ -20,7 +20,7 @@ const pool = new pg.Pool({
     PG_CON.push({ client });
     return;
   } catch (err) {
-    assert(!err, pkg.name + 'ERROR Connecting to PostgreSQL!');
+    assert(!err, pkg.name + ' ERROR Connecting to PostgreSQL!');
   }
 })();
 

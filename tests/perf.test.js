@@ -1,8 +1,16 @@
 const test = require('tape');
 const { init } = require('./server');
+const decache = require('decache');
+// delete the cached module:
+decache('../index.js');
+const HapiPostgresConnection = require('../index.js');
 
 (async () => {
   const server = await init();
+
+  await server.register({
+    plugin: HapiPostgresConnection
+  });
 
   test('GET /nopg url that do not make any postgres queires', async function (t) {
     const nopg = { method: 'GET', url: '/nopg' };
@@ -40,7 +48,8 @@ const { init } = require('./server');
     })()
   });
 
-  test.onFinish(() => {
+  test.onFinish(async () => {
+    await server.stop();
     process.exit();
   });
 })();
