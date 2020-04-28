@@ -1,14 +1,12 @@
 language: node_js
 node_js:
-  - "node"
-  - "4"
-  - "6"
-  - "8"
-sudo: false
+  - 12
 before_script:
   - psql -c 'create database test;' -U postgres
 before_install:
   - pip install --user codecov
+install:
+  - npm install
 after_success:
   - codecov --file coverage/lcov.info --disable search
 env:
@@ -16,3 +14,6 @@ env:
     - DATABASE_URL=postgres://postgres:@localhost/test
 addons:
   postgresql: "9.4"
+script:
+  - npm run test
+after_success: npm run coverage

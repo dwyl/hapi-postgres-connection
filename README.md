@@ -1,4 +1,4 @@
-# Hapi Postgres Connection
+# Hapi Postgres Connection (for Hapi v.19)
 
 ![hapi-postgres-connection](https://cloud.githubusercontent.com/assets/194400/13723469/73b5d8f2-e85e-11e5-82dc-943e7ebccdce.png)
 
@@ -12,7 +12,6 @@ Creates a PostgreSQL Connection available anywhere in your Hapi application.
 [![npm](https://img.shields.io/npm/v/hapi-postgres-connection.svg)](https://www.npmjs.com/package/hapi-postgres-connection)
 [![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-
 ## *Why*?
 
 You are building a PostgreSQL-backed Hapi.js Application
@@ -22,7 +21,7 @@ to [*interesting* errors](https://github.com/brianc/node-postgres/issues/725) ..
 so instead, you spend 1 minute to include a *tiny, tried & tested* plugin
 that makes Postgres available in all your route handlers.
 
-> Got *any questions*? *ask*!! https://github.com/dwyl/hapi-postgres-connection/issues
+> Got *any questions*? *ask*!! <https://github.com/dwyl/hapi-postgres-connection/issues>
 
 ## *What*?
 
@@ -35,38 +34,40 @@ the connection is closed for you.
 
 ### *One Dependency*: `node-postgres` *always up-to-date*
 
-This plugin uses https://github.com/brianc/node-postgres
+This plugin uses <https://github.com/brianc/node-postgres>
 the *most popular* (*actively maintained*) node PostgreSQL Client.
 
 ## *How*?
 
-
-
-### 1. *Download/Install* from NPM
+### 1. *Download/Install* from NPM or Yarn
 
 ```sh
 npm install hapi-postgres-connection --save
 ```
 
-### 2. *Intialise* the plugin in your Hapi Server
+or
+
+```sh
+yarn add hapi-postgres-connection
+```
+
+### 2. *Initialize* the plugin in your Hapi Server
 
 in your server:
+
 ```js
-server.register({ // register all your plugins
-  register: require('hapi-postgres-connection') // no options required
-}, function (err) {
-  if (err) {
-    // handle plugin startup error
-  }
+const HapiPostgresConnection = require('hapi-postgres-connection');
+
+await server.register({
+  plugin: HapiPostgresConnection
 });
 ```
+
 Now *all* your route handlers have access to Postgres
 via: `request.pg.client`
 
-You also can also access Postgres through the `getCon` method on the 
-Hapi Postgres Connection module:
- `var pg = require('hapi-postgres-connection').getCon()`
- 
+You also can also access Postgres through the `getCon` method on the Hapi Postgres Connection module: `const pg = require('hapi-postgres-connection').getCon();`
+
 This method may be useful when do not have access to the request
 object.
 
@@ -76,13 +77,17 @@ object.
 server.route({
   method: 'GET',
   path: '/',
-  handler: function(request, reply) {
+  handler: async function(request, h) {
     let email = 'test@test.net';
     let select = `SELECT * FROM people WHERE ${email}`;
-    request.pg.client.query(select, function(err, result) {
-      console.log(err, result);
-      return reply(result.rows[0]);
-    })
+
+    try {
+      const result = await request.pg.client.query(insertData);
+      console.log(result);
+      return h.response(result.rows[0]);
+    } catch (err) {
+      console.log(err);
+    }
   }
 });
 ```
@@ -99,13 +104,14 @@ so we figured it made sense to keep it.
 > If you are unsure how to set the Environment Variable
 or why this is a *good idea*  
 (*hard-coding values in your app is a really bad idea...*)  
-please see: https://github.com/dwyl/learn-environment-variables
+please see: <https://github.com/dwyl/learn-environment-variables>
 
 ### *Optional* Environment Variable: `DATABASE_SSL`
+
 If your database connection requires the use of SSL, you can set `DATABASE_SSL` environment
 variable to true and the pool connection will be done accordingly. This is required
 (for example) by databases hosted on [*Heroku*]
-(https://devcenter.heroku.com/articles/heroku-postgresql#heroku-postgres-ssl).
+(<https://devcenter.heroku.com/articles/heroku-postgresql#heroku-postgres-ssl).>
 
 ## *Q*: Don't We need to Close the Postgres Connection?
 
@@ -118,13 +124,12 @@ To run the tests *locally* you will need to have
 a running instance of PostgreSQL with a database called `test` available.
 
 Then set your `DATABASE_URL` Environment Variable, on my localhost its:
+
 ```sh
 export DATABASE_URL=postgres://postgres:@localhost/test
 ```
+
 (*the default `postgres` user does not have a password on localhost*)
-
-
-<br />
 
 ## *Motivation?*
 

@@ -1,59 +1,64 @@
-var assert = require('assert');
+const assert = require('assert');
 // if DATABASE_URL Environment Variable is unset halt the server.start
 assert(process.env.DATABASE_URL, 'Please set DATABASE_URL Env Variable');
 
-var pg = require('pg');
-var pkg = require('./package.json');
-var PG_CON = []; // this "global" is local to the plugin.
-var run_once = false;
+const pg = require('pg');
+const pkg = require('./package.json');
+const PG_CON = []; // this "global" is local to the plugin.
+let run_once = false;
 
 // create a pool
-var pool = new pg.Pool({connectionString: process.env.DATABASE_URL, ssl: process.env.DATABASE_SSL || false});
-
-// connection using created pool
-pool.connect(function(err, client, done) {
-  assert(!err, pkg.name + 'ERROR Connecting to PostgreSQL!');
-  PG_CON.push({ client: client, done: done});
-  return;
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_SSL || false
 });
 
-function assign_connection (request, reply) { // DRY
-  request.pg = exports.getCon();
-  reply.continue();
+const createPoolConnection = async () => {
+  try {
+    const client = await pool.connect();
+    PG_CON.push({ client });
+  } catch (err) {
+    assert(!err, pkg.name + ' ERROR Connecting to PostgreSQL!');
+  }
 }
 
-exports.register = function(server, options, next) {
+async function assign_connection (request, h) { // DRY
+  request.pg = await module.exports.getCon();
+  return h.continue;
+}
 
-  server.ext('onPreAuth', function (request, reply) {
-    // each connection created is shut down when the server stops (e.g tests)
-    if(!run_once) {
-      run_once = true;
-      server.on('stop', function () { // only one server.on('stop') listener
-        PG_CON.forEach(function (con) { // close all the connections
-          con && con.client && con.client.readyForQuery && con.client.end();
-          con && con.done && con.done();
-        });
-        server.log(['info', pkg.name], 'DB Connection Closed');
-      });
-    }
-    if(PG_CON.length === 0) {
-      pool.connect(function(err, client, done) {
-        assert(!err, pkg.name + 'ERROR Connecting to PostgreSQL!');
-        PG_CON.push({ client: client, done: done});
-        assign_connection(request, reply);
-      });
-    }
-    else {
-      assign_connection(request, reply);
-    }
-  });
-  next();
+const HapiPostgresConnection = {
+  pkg,
+  name: 'HapiPostgresConnection',
+  version: '1.0.0',
+  register: async function (server) {
+    // connection using created pool
+    await createPoolConnection();
+    server.ext({
+      type: 'onPreAuth',
+      method: async function (request, h) {
+        // each connection created is shut down when the server stops (e.g tests)
+        if(!run_once) {
+          run_once = true;
+          server.events.on('stop', function () { // only one server.on('stop') listener
+            PG_CON.forEach(async function (con) { // close all the connections
+              await con.client.end();
+            });
+            server.log(['info', pkg.name], 'DB Connection Closed');
+          });
+        }
+        return assign_connection(request, h);
+      }
+    });
+  }
 };
 
-exports.register.attributes = {
-  pkg: pkg
-};
+module.exports = HapiPostgresConnection;
 
-exports.getCon = function () {
-  return { client: PG_CON[0].client, done: PG_CON[0].done };
+module.exports.getCon = async function () {
+  if (!PG_CON[0]) {
+    await createPoolConnection();
+    return PG_CON[0];
+  }
+  return PG_CON[0];
 };
