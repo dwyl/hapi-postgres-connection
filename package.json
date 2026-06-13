@@ -16,7 +16,7 @@
     "pg": "^8.0.2"
   },
   "devDependencies": {
-    "@hapi/hapi": "^19.1.1",
+    "@hapi/hapi": "^21.4.9",
     "codecov": "^3.6.5",
     "decache": "^4.5.1",
     "nyc": "^15.0.1",
