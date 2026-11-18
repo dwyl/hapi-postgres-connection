@@ -21,7 +21,7 @@ available anywhere in your `Hapi` application.
 ## *Why*?
 
 You are building a PostgreSQL-backed Hapi.js Application
-but don't want to be initialising a connection to Postgres
+but don't want to be initializing a connection to Postgres
 in your route handler because it's *slow* and can lead
 to [*interesting* errors](https://github.com/brianc/node-postgres/issues/725) ...
 so instead, you spend 1 minute to include a *tiny, tried & tested* plugin
@@ -134,6 +134,13 @@ Then set your `DATABASE_URL` Environment Variable, on my localhost its:
 ```sh
 export DATABASE_URL=postgres://postgres:@localhost/test
 ```
+
+To `CREATE` the `test` Database, run the following command:
+
+```sh
+psql -c 'create database test;' -U postgres
+```
+
 
 (*the default `postgres` user does not have a password on localhost*)
 
