@@ -11,7 +11,7 @@
     "connectionErrorTest": "PORT=8000 nyc --reporter=lcov node ./tests/connection_error.test.js",
     "test": "npm run createTestDB && npm run performanceTest && npm run connectionErrorTest",
     "coverage": "nyc tape ./test/*.js && nyc check-coverage",
-    "lint": "eslint lib"
+    "lint": "eslint index.js"
   },
   "dependencies": {
     "pg": "^8.23.1"
