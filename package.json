@@ -13,7 +13,7 @@
     "coverage": "codecov"
   },
   "dependencies": {
-    "pg": "^8.0.2"
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@hapi/hapi": "^21.4.9",
