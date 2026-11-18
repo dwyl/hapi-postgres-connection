@@ -46,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/dwyl/hapi-postgres-connection/issues"
   },
-  "homepage": "https://github.com/dwyl/hapi-postgres-connection#readme"
+  "homepage": "https://github.com/dwyl/hapi-postgres-connection#readme",
+  "engines": {
+    "node": ">=24"
+  }
 }

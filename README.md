@@ -1,8 +1,9 @@
-# Hapi Postgres Connection (for Hapi v.19)
+# Hapi Postgres Connection (for Hapi v.21+)
 
 ![hapi-postgres-connection](https://cloud.githubusercontent.com/assets/194400/13723469/73b5d8f2-e85e-11e5-82dc-943e7ebccdce.png)
 
-Creates a PostgreSQL Connection available anywhere in your Hapi application.
+Creates a **`PostgreSQL` connection pool**
+available anywhere in your Hapi application.
 
 [![Build Status](https://travis-ci.org/dwyl/hapi-postgres-connection.svg?branch=master)](https://travis-ci.org/dwyl/hapi-postgres-connection)
 [![codecov.io](https://codecov.io/github/dwyl/hapi-postgres-connection/coverage.svg?branch=master)](https://codecov.io/github/dwyl/hapi-postgres-connection?branch=master)
@@ -15,7 +16,6 @@ Creates a PostgreSQL Connection available anywhere in your Hapi application.
 [![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-postgres-connection/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-postgres-connection?targetFile=package.json)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hapi-postgres-connection/ci.yml?label=build&style=flat-square&branch=main)
 [![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-postgres-connection/main.svg?style=flat-square)](http://codecov.io/github/dwyl/hapi-postgres-connection?branch=main)
-[![Inline docs](http://inch-ci.org/github/dwyl/hapi-postgres-connection.svg?branch=main&style=flat-square)](http://inch-ci.org/github/dwyl/hapi-postgres-connection)
 [![HAPI 21.1.0](http://img.shields.io/badge/hapi-21.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
 [![Node.js Version](https://img.shields.io/node/v/hapi-postgres-connection.svg?style=flat-square "Node.js 18.x, 20.x & 21.x supported")](http://nodejs.org/download/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-postgres-connection/issues)
