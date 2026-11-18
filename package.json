@@ -10,7 +10,7 @@
     "performanceTest": "PORT=8000 nyc --reporter=lcov node ./tests/perf.test.js | tap-spec",
     "connectionErrorTest": "PORT=8000 nyc --reporter=lcov node ./tests/connection_error.test.js | tap-spec",
     "test": "npm run createTestDB && npm run performanceTest && npm run connectionErrorTest",
-    "coverage": "codecov",
+    "coverage": "nyc tape ./test/*.js && nyc check-coverage",
     "lint": "eslint lib"
   },
   "dependencies": {
@@ -18,8 +18,7 @@
   },
   "devDependencies": {
     "@hapi/hapi": "^21.4.9",
-    "codecov": "^3.6.5",
-    "decache": "^4.5.1",
+    "decache": "^4.6.2",
     "eslint": "^10.15.0",
     "nyc": "^15.0.1",
     "pg-escape": "^0.2.0",
