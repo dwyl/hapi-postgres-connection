@@ -37,6 +37,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: psql -c 'create database test;' -U postgres
     - run: npm ci
     - run: npm run lint
     - run: npm test
