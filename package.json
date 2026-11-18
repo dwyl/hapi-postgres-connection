@@ -13,7 +13,7 @@
     "coverage": "codecov"
   },
   "dependencies": {
-    "pg": "^8.0.2"
+    "pg": "^8.23.1"
   },
   "devDependencies": {
     "@hapi/hapi": "^21.4.9",
@@ -46,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/dwyl/hapi-postgres-connection/issues"
   },
-  "homepage": "https://github.com/dwyl/hapi-postgres-connection#readme"
+  "homepage": "https://github.com/dwyl/hapi-postgres-connection#readme",
+  "engines": {
+    "node": ">=24"
+  }
 }
