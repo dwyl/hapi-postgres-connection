@@ -22,7 +22,7 @@
     "eslint": "^10.15.0",
     "nyc": "^18.0.0",
     "pg-escape": "^0.2.0",
-    "tape": "^4.13.2"
+    "tape": "^5.11.0"
   },
   "repository": {
     "type": "git",
