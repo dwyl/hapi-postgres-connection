@@ -1,6 +1,6 @@
 {
   "name": "hapi-postgres-connection",
-  "version": "6.5.1",
+  "version": "7.1.0",
   "description": "A connection (pool) to PostgreSQL available anywhere in your hapi application",
   "main": "index.js",
   "scripts": {
