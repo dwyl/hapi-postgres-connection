@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 env:
-  DATABASE_URL: postgres://postgres:@localhost/test
+  DATABASE_URL: 'postgres://postgres:@localhost/test'
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_PASSWORD: 'postgres'
-          POSTGRES_DB: test
+          POSTGRES_DB: 'test'
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
