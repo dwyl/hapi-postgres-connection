@@ -43,6 +43,7 @@ jobs:
         DATABASE_URL: postgres://postgres:@localhost/test
     # - run: psql -c 'create database test;' -U postgres
     - run: npm ci
+    - run: npm run createTestDB
     - run: npm run lint
     - run: npm test
     - name: Upload coverage to Codecov
