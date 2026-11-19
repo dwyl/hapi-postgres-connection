@@ -18,7 +18,9 @@ jobs:
         image: postgres:latest
         ports: ['5432:5432']
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
           DATABASE_URL: postgres://postgres:@localhost/test
         options: >-
           --health-cmd pg_isready
@@ -37,7 +39,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: psql -c 'create database test;' -U postgres
+    # - run: psql -c 'create database test;' -U postgres
     - run: npm ci
     - run: npm run lint
     - run: npm test
