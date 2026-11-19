@@ -10,7 +10,8 @@ on:
     branches: [ main ]
 
 env:
-  DATABASE_URL: 'postgres://postgres:@localhost/test'
+  DATABASE_URL: "postgres://postgres:postgres@localhost/test"
+  NODE_ENV: test
 
 jobs:
   build:
@@ -21,9 +22,9 @@ jobs:
         image: postgres:latest
         ports: ['5432:5432']
         env:
-          POSTGRES_USER: 'postgres'
-          POSTGRES_PASSWORD: 'postgres'
-          POSTGRES_DB: 'test'
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
