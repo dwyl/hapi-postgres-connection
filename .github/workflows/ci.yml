@@ -21,8 +21,8 @@ jobs:
         image: postgres:latest
         ports: ['5432:5432']
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: 'postgres'
+          POSTGRES_PASSWORD: 'postgres'
           POSTGRES_DB: test
         options: >-
           --health-cmd pg_isready
