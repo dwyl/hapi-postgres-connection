@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  DATABASE_URL: "postgres://postgres:postgres@localhost/test"
+  NODE_ENV: test
+
 jobs:
   build:
 
@@ -18,7 +22,9 @@ jobs:
         image: postgres:latest
         ports: ['5432:5432']
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -36,7 +42,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    # - run: psql -c 'create database test;' -U postgres
     - run: npm ci
+    - run: npm run createTestDB
     - run: npm run lint
     - run: npm test
     - name: Upload coverage to Codecov
