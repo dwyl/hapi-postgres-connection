@@ -1,21 +1,27 @@
-# Hapi Postgres Connection (for Hapi v.19)
+<div align="center">
+
+# Hapi Postgres Connection (for `Hapi v.21+`)
 
 ![hapi-postgres-connection](https://cloud.githubusercontent.com/assets/194400/13723469/73b5d8f2-e85e-11e5-82dc-943e7ebccdce.png)
 
-Creates a PostgreSQL Connection available anywhere in your Hapi application.
+Creates a **`PostgreSQL` connection pool**
+available anywhere in your `Hapi` application.
 
-[![Build Status](https://travis-ci.org/dwyl/hapi-postgres-connection.svg?branch=master)](https://travis-ci.org/dwyl/hapi-postgres-connection)
-[![codecov.io](https://codecov.io/github/dwyl/hapi-postgres-connection/coverage.svg?branch=master)](https://codecov.io/github/dwyl/hapi-postgres-connection?branch=master)
-[![Code Climate](https://codeclimate.com/github/dwyl/hapi-postgres-connection/badges/gpa.svg)](https://codeclimate.com/github/dwyl/hapi-postgres-connection)
-[![devDependency Status](https://david-dm.org/dwyl/hapi-postgres-connection/dev-status.svg)](https://david-dm.org/dwyl/hapi-postgres-connection#info=devDependencies)
-[![Dependency Status](https://david-dm.org/dwyl/hapi-postgres-connection.svg)](https://david-dm.org/dwyl/hapi-postgres-connection)
-[![npm](https://img.shields.io/npm/v/hapi-postgres-connection.svg)](https://www.npmjs.com/package/hapi-postgres-connection)
-[![Join the chat at https://gitter.im/dwyl/chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dwyl/chat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Known Vulnerabilities](https://snyk.io/test/github/dwyl/hapi-postgres-connection/badge.svg?targetFile=package.json&style=flat-square)](https://snyk.io/test/github/dwyl/hapi-postgres-connection?targetFile=package.json)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dwyl/hapi-postgres-connection/ci.yml?label=build&style=flat-square&branch=main)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/hapi-postgres-connection/main.svg?style=flat-square)](http://codecov.io/github/dwyl/hapi-postgres-connection?branch=main)
+[![HAPI 21.1.0](http://img.shields.io/badge/hapi-21.1.0-brightgreen.svg?style=flat-square "Latest Hapi.js")](http://hapijs.com)
+[![Node.js Version](https://img.shields.io/node/v/hapi-postgres-connection.svg?style=flat-square "Node.js 18.x, 20.x & 21.x supported")](http://nodejs.org/download/)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/dwyl/hapi-postgres-connection/issues)
+[![HitCount](http://hits.dwyl.com/dwyl/hapi-postgres-connection.svg)](http://hits.dwyl.com/dwyl/hapi-postgres-connection)
+[![npm package version](https://img.shields.io/npm/v/hapi-postgres-connection.svg?style=flat-square)](https://www.npmjs.com/package/hapi-postgres-connection)
+
+</div>
 
 ## *Why*?
 
 You are building a PostgreSQL-backed Hapi.js Application
-but don't want to be initialising a connection to Postgres
+but don't want to be initializing a connection to Postgres
 in your route handler because it's *slow* and can lead
 to [*interesting* errors](https://github.com/brianc/node-postgres/issues/725) ...
 so instead, you spend 1 minute to include a *tiny, tried & tested* plugin
@@ -128,6 +134,13 @@ Then set your `DATABASE_URL` Environment Variable, on my localhost its:
 ```sh
 export DATABASE_URL=postgres://postgres:@localhost/test
 ```
+
+To `CREATE` the `test` Database, run the following command:
+
+```sh
+psql -c 'create database test;' -U postgres
+```
+
 
 (*the default `postgres` user does not have a password on localhost*)
 

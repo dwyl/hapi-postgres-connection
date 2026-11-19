@@ -20,7 +20,7 @@ const createPoolConnection = async () => {
   } catch (err) {
     assert(!err, pkg.name + ' ERROR Connecting to PostgreSQL!');
   }
-}
+};
 
 async function assign_connection (request, h) { // DRY
   request.pg = await module.exports.getCon();

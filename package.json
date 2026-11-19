@@ -7,22 +7,22 @@
     "start": "PORT=8000 node ./tests/server/server_example.js",
     "createTestDB": "node ./tests/_create_test_db.js",
     "allTests": "./node_modules/tape/bin/tape ./tests/*.js",
-    "performanceTest": "PORT=8000 nyc --reporter=lcov node ./tests/perf.test.js | tap-spec",
-    "connectionErrorTest": "PORT=8000 nyc --reporter=lcov node ./tests/connection_error.test.js | tap-spec",
+    "performanceTest": "PORT=8000 nyc --reporter=lcov node ./tests/perf.test.js",
+    "connectionErrorTest": "PORT=8000 nyc --reporter=lcov node ./tests/connection_error.test.js",
     "test": "npm run createTestDB && npm run performanceTest && npm run connectionErrorTest",
-    "coverage": "codecov"
+    "coverage": "nyc tape ./test/*.js && nyc check-coverage",
+    "lint": "eslint index.js"
   },
   "dependencies": {
-    "pg": "^8.0.2"
+    "pg": "^8.23.1"
   },
   "devDependencies": {
     "@hapi/hapi": "^21.4.9",
-    "codecov": "^3.6.5",
-    "decache": "^4.5.1",
-    "nyc": "^15.0.1",
+    "decache": "^4.6.2",
+    "eslint": "^10.15.0",
+    "nyc": "^18.0.0",
     "pg-escape": "^0.2.0",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.13.2"
+    "tape": "^5.11.0"
   },
   "repository": {
     "type": "git",
@@ -46,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/dwyl/hapi-postgres-connection/issues"
   },
-  "homepage": "https://github.com/dwyl/hapi-postgres-connection#readme"
+  "homepage": "https://github.com/dwyl/hapi-postgres-connection#readme",
+  "engines": {
+    "node": ">=24"
+  }
 }
